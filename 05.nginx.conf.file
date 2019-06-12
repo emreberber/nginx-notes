@@ -1,0 +1,174 @@
+# The Main Nginx Configuration File
+securing and optimizing nginx.conf
+/etc/nginx/nginx.conf
+
+= Commands
+edit nginx.conf
+- sudo vi /etc/nginx/nginx.conf
+determine number of cpu cores
+- lscpu
+determine number of worker connections
+- unlimit -n
+test nginx configuration file syntax before reload
+- sudo nginx -t
+reload / restart nginx
+- sudo systemctl reload nginx OR restart nginx
+
+
+== Main Context
+worker_processes
+worker_rlimit_nofile
+
+== Events Context
+worker_connections 2048;
+multi_accept on;
+use epoll
+
+
+== Http Context
+server_tokens off;
+server_names_hash_bucket_size 64;
+access_log off;
+# access_log /var/log/nginx/access.log
+gzip on;
+buffers, timeouts & filehandle caching
+
+
+== buffers
+client_body_buffer_size 10k;
+client_header_buffer_size 1k;
+client_max_body_size 8m;
+large_client_header_buffers 2 1k;
+
+
+== timeouts
+client_body_timeout 3m;
+client_header_timeout 3m;
+keepalive_timeout 100;
+send_timeout 3m;
+
+
+== filehandle caching
+open_file_cache max=1000 inactive 20s;
+open_file_cache_valid 30s;
+open_file_cache_min_uses 5;
+open_file_cache_errors off;
+
+
+!!! PART 2 
+
+- cd /etc/nginx
+- sudo cp nginx.conf nginx.conf.$(date +%Y-%m-%d
+- lscpu
+    > CPU(s):              1
+- ulimit -n
+    > 1024
+- sudo vi nginx.conf
+    > worker_processes auto; to worker_processes 1;
+     hemen altina ekle:
+    > worker_rlimit_nofile 15000;
+    
+    > worker_connections 2048;
+    > #multi_accept on; to multi_accept on;
+    hemen altına ekle:
+    > use epoll;
+
+    > keepalived_timeout 65; to #keepalived_timeout 65;
+    > #server_tokens off; to server_tokens off;
+    > # server_names_hash_bucket_size 64; to 
+			server_names_hash_bucket_size 64;
+    
+    > access_log /var/log/nginx/access.log; to
+			# access_log /var/log/nginx/access.log;
+    > hemen uzerine ekle:
+    > access_log none;
+
+	# gzip_vary on;
+        # gzip_proxied any;
+        # gzip_comp_level 6;
+        # gzip_buffers 16 8k;
+        # gzip_http_version 1.1;
+        # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+	hepsinin uncomment yap ve 6 to 5
+
+	 gzip_vary on;
+         gzip_proxied any;
+         gzip_comp_level 5;
+         gzip_buffers 16 8k;
+         gzip_http_version 1.1;
+         gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+
+
+    > mail blogunu komple sil
+
+- sudo nginx -t
+- sudo systemctl restart nginx
+
+
+
+!!! PART 3 : Buffers, Timesouts and File Handle
+
+- cd /etc/nginx
+- sudo mkdir global
+- cd global
+- sudo touch buffers.conf
+- sudo touch timeouts.conf
+- sudo touch file_handle_cache.conf
+
+
+- sudo vi buffers.conf
+------------------------------------------
+#####
+## NGINX.CONF BUFFER DIREVTIVES
+#####
+
+# BUFFERS
+client_body_buffer_size 10k;
+client_header_buffer_size 1k;
+client_max_body_size 8m;
+large_client_header_buffers 2 1k;
+------------------------------------------
+
+- sudo vi file_handle_cache.conf
+------------------------------------------
+# FILE HANDLE CACHE
+
+open_file_cache max=1500 inactive=30s;
+open_file_cache_valid 30s;
+open_file_cache_min_uses 5;
+open_file_cache_errors_off;
+------------------------------------------
+
+
+- sudo vi timeouts.conf
+------------------------------------------
+#####
+## NGINX.CONF TIMEOUT DIRECTIVES
+#####
+
+#TIMEOUTS
+
+client_header_timeout 3m;
+client_body_timeout 3m;
+keepalive_timeout 100;
+keepalive_requests 1000;
+send_timeout 3m;
+------------------------------------------
+
+- cd ..
+- sudo vi nginx.conf
+
+> Virtual Host Configs altına;
+--------------------------------------------
+##
+# Buffers Timeouts File Handle Cache
+##
+
+include global/buffers.conf;
+include global/timeouts.conf;
+# include global/file_handle_cache.conf;
+--------------------------------------------
+
+- sudo nginx -t
+- sudo systemctl restart nginx

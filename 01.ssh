@@ -1,0 +1,68 @@
+Public / Private Key Authentication
+
+** public key stored on server
+** private key stored locally
+
+Server:
+- cd
+- mkdir .ssh
+- exit
+
+Client:
+- ssh-keygen -b 4096 rsa
+- cd .ssh (nereye kayıt ettiysen)
+	id_rsa  id_rsa.pub  known_hosts
+
+- cd
+- scp .ssh/id_rsa.pub emre@ip:/home/emre/.ssh
+
+Server:
+- cd .ssh/
+- ls
+	id_rsa.pub
+- mv id_rsa.pub authorized_keys
+- chmod 400 authorized_keys
+- (check .ssh file permission is 700)
+- sudo chattr +1 authorized_keys
+- cd /etc/ssh
+- sudo vi sshd_config
+and open file uncomment AuthorizedKyesFile %h/.ssh/authorized_keys
+PasswordAuthentication yes to no
+
+For Ubuntu 18.04
+AuthorizedKyesFile .ssh/authorized_keys .ssh/authorized_keys2
+AuthorizedKyesFile %h/.ssh/authorized_keys .ssh/authorized_keys2
+PasswordAuthentication yes to no
+
+
+- sudo systemctl restart ssh
+
+
+# Permission denied (publickey) Hatası Alınırsa,
+- ssh -i .ssh/id_rsa emre@ip
+
+Client
+- cd ~/.ssh
+- vi config
+
+Host nginx
+HostName 35.236.64.179  
+User emre
+IdentityFile ~/.ssh/id_rsa
+ServerAliveInterval 60
+ServerAliveCountMax 120
+
+- ssh nginx
+
+
+# Firewall Configs (server)
+- sudo ufw status verbose
+- sudo vi /etc/default/ufw
+IPV6=yes to no
+- sudo ufw default deny incoming 
+- sudo ufw default allow outgoing
+- sudo ufw allow http
+- sudo ufw allow https
+- sudo ufw enable
+- sudo ufw status
+- sudo reboot

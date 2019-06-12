@@ -1,0 +1,16 @@
+# Fail2ban
+
+Configuration File : 
+--> /etc/fail2ban/jail.local
+
+Log Files : 
+--> /var/log/fail2ban.log
+--> /var/log/auth.log
+
+İnstall :
+- sudo apt install fail2ban
+- cd /etc/fail2ban
+- ls
+- sudo cp jail.conf jail.local
+- cd /var/log
+- more fail2ban.log

@@ -1,0 +1,68 @@
+# NGINX Configuraion
+
+:: installing a Wordpress site(s) using wpcli
+
+[directive]
+:: consists of an option and an option value and ends with a semi-colon
+
+server_name domain.com www.domain.com;
+
+[context]
+:: also a directive, but in encloses other directives in its block
+
+events {
+    worker_connections 768;
+}
+
+[context] => main events http server location
+
+
+--------main context--------
+user www-data
+worker_processes auto;
+----------------------------
+
+------events context--------
+events {
+    worker_connections 768;
+    # multi_accept on;
+}
+----------------------------
+
+--------server context------
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+   
+    root /var/www/html;
+
+    index index.php;
+
+    server_name_;
+
+    location /{
+	try_files $uri $uri/ /index.php?$args;
+    }
+
+    --------location context----------------------------
+    location ~ \.php$ {
+ 	include snippets/fastcgi-php.conf;
+	fastcgi_pass unix:/var/run/php/php7.0-fpm.scok;
+    }
+    ----------------------------------------------------
+}
+-----------------------------------------------------------
+
+
+main 
+events {
+}
+http {
+    server {
+	location {
+	}
+    }
+}
+
+
+

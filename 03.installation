@@ -1,0 +1,56 @@
+# Ubuntu 18.04: Install NGINX, MARIADB and Install, 
+	Secure and Optimize PHP7.2
+
+
+- sudo apt install nginx
+
+install mariadb
+- sudo apt install mariadb-server php7.2-mysql
+
+and then secure mariadb installation
+- sudo mysql_secure_installation
+    > Change the root password? [Y/n] n
+    > Remove anonymous users? [Y/n] y
+    > Disallow root login remotely? [Y/n] y
+    > Remove test database and access to it? [Y/n] y
+    > Reload privilege tables now? [Y/n] y
+
+install php7.2 (pass)
+- sudo apt install php7.2-module
+
+required php 7.2 modules for wordpress
+- sudo apt install php7.2-cli php7.2-gd php7.2-xmlrpc php7.2-curl php7.2-opcache php7.2-fpm php7.2-dev php7.2-xml php7.2-mbstring
+
+Configuration Files
+absolute path to file : /etc/php/7.2/fpm/php.ini
+- cd /etc/php
+- ls
+- cd 7.2
+- ls
+- cd fpm
+- sudo cp php.ini php.ini.bak
+- sudo vi php.ini
+    > allow_url_fopen = On to Off
+    > ;cgi.fix_pathinfo=1 to cgi.fix_pathinfo=0
+    > ;opcache.enable=1 to opcache.enable=1
+    > ;opcache.memory_consumption=128 to opcache.memory_consumption=192
+    > ;opcache.interned_strings_buffer=8 to 
+			opcache.interned_strings_buffer=16
+    > ;opcache.max_accelerated_files=10000 to 
+			opcache.max_accelerated_files=7963
+    > ;opcache.validate_timestamps=1 to opcache.validate_timestamps=0
+    > ;opcache.revalidate_freq=2 to opcache.revalidate_freq=0
+    > :wq
+- sudo systemctl restart php7.2-fpm
+
+
+
+
+
+
+
+
+
+
+
+
