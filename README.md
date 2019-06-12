@@ -244,11 +244,7 @@ keepalive_timeout 65;
 
 </div>
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
-
 ## 🎉 Useful Links <a name = "useful_links"></a>
--
-    -
-    -
+-  
 -
 -
