@@ -237,7 +237,7 @@ tcp_nodelay on;
 keepalive_timeout 65;
 
 ### ✍️ Author <a name = "author"></a>
-<div align="center">
+<div align="left">
 
 [![Status](https://img.shields.io/badge/github-emreberber-lightgrey.svg)]() 
 [![Status](https://img.shields.io/badge/twitter-emreberber07-blue.svg)]() 
