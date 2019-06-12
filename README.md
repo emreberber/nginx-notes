@@ -176,13 +176,9 @@ Probably because with on, all the worker processes are active and try to handle 
 http {
 
 
-
-
         ##
         # Basic Settings
         ##
-
-
 
 
         sendfile on;
@@ -193,38 +189,24 @@ http {
         # server_tokens off;
 
 
-
-
         # server_names_hash_bucket_size 64;
         # server_name_in_redirect off;
 
 
-
-
         include /etc/nginx/mime.types;
         default_type application/octet-stream;
-
-
         ...
-
-
 
 
 to
 
 
-
-
 http {
-
-
 
 
         ##
         # Basic Settings
         ##
-
-
 
 
         sendfile on;
@@ -235,12 +217,8 @@ http {
         server_tokens off;
 
 
-
-
         # server_names_hash_bucket_size 64;
         # server_name_in_redirect off;
-
-
 
 
         include /etc/nginx/mime.types;
