@@ -223,6 +223,7 @@ http {
 
         include /etc/nginx/mime.types;
         default_type application/octet-stream;
+        ...
 ```
 
 - **http** context is when configuring Nginx as a web server or reverse proxy, the "http" context will hold the majority of the configuration. This context will contain all of the directives and other contexts necessary to define how the program will handle HTTP or HTTPS connections.
