@@ -237,7 +237,7 @@ sendfile_mac_chunk 1m;
 <br> tcp_nodelay on;
 <br> keepalive_timeout 65;
 
-### Create your site(S) directory structure <a name = "create_your_sites_directory_structure"></a>
+### Create Your Site(s) Directory Structure <a name = "create_your_sites_directory_structure"></a>
 
 - wpcli.com
 - ww.wpcli.com
