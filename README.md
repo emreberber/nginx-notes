@@ -241,7 +241,7 @@ sendfile_mac_chunk 1m;
 
 - wpcli.com
 - ww.wpcli.com
-- bog.wpcli.com
+- blog.wpcli.com
 - forum.wpcli.com
 
 > server web root /var/www <br>
