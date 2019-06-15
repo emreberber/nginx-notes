@@ -25,6 +25,7 @@
 - [Contexts](#contexts)
 - [The Main Nginx Configuration File](#main_conf_file)
 - [Editing nginx.conf](#nginx-conf)
+- [Create your site(S) directory structure](#create_your_sites_directory_structure)
 - [Author](#author)
 - [Useful Links](#useful_links)
 
@@ -233,8 +234,68 @@ sendfile on;
 sendfile_mac_chunk 1m;
 - **tcp_nopush** directive together with the sendfile on;directive. This enables NGINX to send HTTP response headers in one packet right after the chunk of data has been obtained by sendfile().
 - **tcp_nodelay** directive allows override of Nagle’s algorithm, originally designed to solve problems with small packets in slow networks. The algorithm consolidates a number of small packets into a larger one and sends the packet with a 200 ms delay. Nowadays, when serving large static files, the data can be sent immediately regardless of the packet size. The delay also affects online applications (ssh, online games, online trading, and so on). By default, the tcp_nodelay directive is set to on which means that the Nagle’s algorithm is disabled. Use this directive only for keepalive connections
-tcp_nodelay on;
-keepalive_timeout 65;
+<br> tcp_nodelay on;
+<br> keepalive_timeout 65;
+
+### Create your site(S) directory structure <a name = "create_your_sites_directory_structure"></a>
+
+- wpcli.com
+- ww.wpcli.com
+- bog.wpcli.com
+- forum.wpcli.com
+
+> server web root /var/www <br>
+> ownership root:root <br>
+> create directories site.com/public_html <br>
+> using tree to view directory layout
+
+##### Commands
+
+```
+changing ownership
+$ chown -R user:group /path
+create directory
+$ mkdir
+create directory with sub-directories
+$ mkdir -p
+install tree
+$ sudo apt install tree
+```
+
+##### Implementation Steps
+
+```
+$ cd /var/www
+$ ls -l
+total 4
+drwxr-xr-x 2 root root 4096 Jun  3 17:31 html
+$  sudo chown -R emre:emre /var/www/
+$ ls -l
+total 4
+drwxr-xr-x 2 emre emre 4096 Jun  3 17:31 html
+$ mkdir wpcli.com
+html  wpcli.com
+$ cd wpcli.com/
+$ mkdir public_html
+$ ls
+public_html
+$ cd ..
+$ mkdir -p blog.wpcli.com/public_html
+$ mkdir -p forum.wpcli.com/public_html
+$ ls
+blog.wpcli.com  forum.wpcli.com  html  wpcli.com
+$ sudo apt install tree
+$ tree
+.
+├── blog.wpcli.com
+│   └── public_html
+├── forum.wpcli.com
+│   └── public_html
+├── html
+│   └── index.nginx-debian.html
+└── wpcli.com
+    └── public_html
+```
 
 ### ✍️ Author <a name = "author"></a>
 <div align="left">
