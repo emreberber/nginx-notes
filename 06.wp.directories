@@ -1,0 +1,63 @@
+Create your site(S) directory structure
+
+* wpcli.com
+* www.wpcli.com
+* blog.wpcli.com
+* forum.wpcli.com
+
+-- server web root
+    /var/www
+ownership root:root
+create directories
+site.com/public_html
+using tree to view directory layout
+
+>> Commands
+changing ownership
+- chown -R user:group /path
+create directory
+- mkdir
+create directory with sub-directories
+- mkdir -p
+install tree
+- sudo apt install tree
+
+
+------------------------------------------------
+
+$ cd /var/www
+$ ls -l
+total 4
+drwxr-xr-x 2 root root 4096 Jun  3 17:31 html
+$  sudo chown -R emre:emre /var/www/
+$ ls -l
+total 4
+drwxr-xr-x 2 emre emre 4096 Jun  3 17:31 html
+$ mkdir wpcli.com
+html  wpcli.com
+$ cd wpcli.com/
+$ mkdir public_html
+$ ls
+public_html
+$ cd ..
+$ mkdir -p blog.wpcli.com/public_html
+$ mkdir -p forum.wpcli.com/public_html
+$ ls
+blog.wpcli.com  forum.wpcli.com  html  wpcli.com
+$ sudo apt install tree
+$ tree
+.
+├── blog.wpcli.com
+│   └── public_html
+├── forum.wpcli.com
+│   └── public_html
+├── html
+│   └── index.nginx-debian.html
+└── wpcli.com
+    └── public_html
+
+
+
+
+
+
