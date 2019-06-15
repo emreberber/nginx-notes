@@ -25,7 +25,7 @@
 - [Contexts](#contexts)
 - [The Main Nginx Configuration File](#main_conf_file)
 - [Editing nginx.conf](#nginx-conf)
-- [Create your site(S) directory structure](#create_your_sites_directory_structure)
+- [Create Your Site(s) Directory Structure](#create_your_sites_directory_structure)
 - [Author](#author)
 - [Useful Links](#useful_links)
 
