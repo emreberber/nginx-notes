@@ -1,0 +1,138 @@
+Nginx Server Blocks
+
+Configuration Files
+
+/etc/nginx/sites-available/
+
+Commands
+
+create backup copy of default file
+sudo cp default default.bak
+
+path to php7.0-fpm.sock file
+sudo find / -name php7.0-fpm.sock
+
+test nginx conf file syntax before reload
+sudo nginx -t
+
+reload nginx
+sudo systemctl reload nginx
+
+
+/// Steps
+
+$ cd /etc/nginx/sites-available
+$ ls
+default
+$ sudo cp default default.bak
+$ sudo vi default
+
+in this file remove comment lines
+default file like this :
+
+============================================
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+
+                # With php-fpm (or other unix sockets):
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+}
+=====================================================================
+
+$ sudo nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+control .sock file 
+ls /var/run/php/php7.2-fpm.sock
+and change php version 7.0 to 7.2 in default file
+
+
+Nginx Location Modifiers
+= exact match
+^~ preferential prefix match
+~ and ~* regex match
+
+Exact math Example
+
+location = /favicon.ico {
+	expires 1y;
+}
+http://www.site.com/favicon.ico
+
+
+Preferential prefix
+
+location ^~ /.well-known {
+	try_files $uri = 404;
+}
+http://www.site.com/.well-known
+
+
+Case insensitive regex
+
+location ~* /uploads/.*\.php$ {
+	deny all;
+}
+
+
+----------------------------------------------
+
+default		/etc/nginx/sites-available/default
+domain		/etc/nginx/sites-available/domain
+
+$ sudo cp default wpcli.com
+$ ls
+default  default.bak  wpcli.com
+$ sudo vi wpcli.com
+file change to
+==========================================
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/wpcli.com/public_html;
+
+        # Add index.php to the list if you are using PHP
+        index index.php;
+
+        server_name wpcli.com www.wpcli.com;
+
+        location / {
+                try_files $uri $uri/ /index.php$args;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+
+                # With php-fpm (or other unix sockets):
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+}
+==============================================
+
+$ sudo nginx -t
+$ sudo ln -s /etc/nginx/sites-available/wpcli.com /etc/nginx/sites-enabled/wpcli.com
+
+$ cd /etc/nginx/sites-enabled/
+$ ls
+default wpcli.com
+
+$ sudo systemctl restart nginx
+and then view browser -> ip address 

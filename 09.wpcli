@@ -1,0 +1,36 @@
+Installing WPCLI on Your Server
+
+Commands
+
+$ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+
+$ chmod +x wp-cli.phar
+$ sudo mv wp-cli.phar /usr/local/bin/wp
+$ wp --nfo
+
+Installation Steps:
+$ curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.pha
+$ ls
+wp-cli.phar
+
+$ ls -l
+-rw-rw-r-- 1 emre emre 5506663 Jul  7 18:48 wp-cli.phar
+
+$ chmod +x wp-cli.phar
+$ ls -l
+-rwxrwxr-x 1 emre emre 5506663 Jul  7 18:48 wp-cli.phar
+
+$ sudo mv wp-cli.phar /usr/local/bin/wp
+$ wp --info
+OS:	Linux 4.15.0-1033-gcp #35-Ubuntu SMP Fri May 17 13:27:54 UTC 2019 x86_64
+Shell:	/bin/bash
+PHP binary:	/usr/bin/php7.2
+PHP version:	7.2.19-0ubuntu0.18.04.1
+php.ini used:	/etc/php/7.2/cli/php.ini
+WP-CLI root dir:	phar://wp-cli.phar/vendor/wp-cli/wp-cli
+WP-CLI vendor dir:	phar://wp-cli.phar/vendor
+WP_CLI phar path:	/home/emre
+WP-CLI packages dir:
+WP-CLI global config:
+WP-CLI project config:
+WP-CLI version:	2.2.0
