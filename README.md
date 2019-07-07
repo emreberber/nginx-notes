@@ -280,20 +280,25 @@ $ mkdir public_html
 $ ls
 public_html
 $ cd ..
+$ mkdir -p www.wpcli.com/public_html
 $ mkdir -p blog.wpcli.com/public_html
 $ mkdir -p forum.wpcli.com/public_html
 $ ls
-blog.wpcli.com  forum.wpcli.com  html  wpcli.com
+blog.wpcli.com  forum.wpcli.com  html  wpcli.com  www.wpcli.com
 $ sudo apt install tree
 $ tree
 .
 ├── blog.wpcli.com
-│   └── public_html
+│   ├── public_html
+│   └── www.blog.wpcli.com
+│       └── public_html
 ├── forum.wpcli.com
 │   └── public_html
 ├── html
 │   └── index.nginx-debian.html
-└── wpcli.com
+├── wpcli.com
+│   └── public_html
+└── www.wpcli.com
     └── public_html
 ```
 
