@@ -26,6 +26,7 @@
 - [The Main Nginx Configuration File](#main_conf_file)
 - [Editing nginx.conf](#nginx-conf)
 - [Create Your Site(s) Directory Structure](#create_your_sites_directory_structure)
+- [Nginx Server Blocks](#nginx_server_blocks)
 - [Author](#author)
 - [Useful Links](#useful_links)
 
@@ -301,6 +302,168 @@ $ tree
 └── www.wpcli.com
     └── public_html
 ```
+
+### Nginx Server Blocks <a name = "nginx_server_blocks"></a>
+
+Configuration files : /etc/nginx/sites-available
+
+##### Commands
+
+```
+# create backup copy of default file
+$ sudo cp default default.bak
+
+# path to php7.0-fpm.sock
+$ sudo find / -name php7.0-fpm.sock
+
+# test nginx conf file syntax before reload
+$ sudo nginx -t
+
+# reload nginx
+$ sudo systemctl reload nginx
+```
+
+##### Implementation Steps
+
+```
+$ cd /etc/nginx/sites-available
+$ ls
+default
+$ sudo cp default default.bak
+$ sudo vi default
+```
+
+ - default file 
+
+```
+server {
+        listen 80 default_server;
+        listen [::]:80 default_server;
+
+        root /var/www/html;
+
+        # Add index.php to the list if you are using PHP
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name _;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+
+                # With php-fpm (or other unix sockets):
+                fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        }
+}
+```
+
+```
+$ sudo nginx -t 
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+```
+
+- control .sock file
+
+```
+$ ls /var/run/php/php7.2-fpm.sock
+```
+
+and change php version 7.0 to 7.2
+
+```
+location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+
+                # With php-fpm (or other unix sockets):
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+```
+
+#### Nginx Location Modifiers
+
+- = exact match
+- ^~ preferential prefix match
+- ~ and ~* regex match
+
+Exact Match Example
+
+```
+location = /favicon.ico {
+        expires 1y;
+}
+http://www.site.com/favicon.ico
+```
+
+Preferential Example
+
+```
+Preferential prefix
+
+location ^~ /.well-known {
+        try_files $uri = 404;
+}
+http://www.site.com/.well-known
+```
+
+Case Insensitive Regex
+
+```
+location ~* /uploads/.*\.php$ {
+        deny all;
+}
+```
+
+- default : /etc/nginx/sites-available/default
+- domain  : /etc/nginx/sites-available/domain
+
+```
+$ sudo cp default wpcli.com
+$ ls
+default  default.bak  wpcli.com
+$ sudo vi wpcli.com
+```
+
+```
+server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/wpcli.com/public_html;
+
+        # Add index.php to the list if you are using PHP
+        index index.php;
+
+        server_name wpcli.com www.wpcli.com; # or ip
+
+        location / {
+                try_files $uri $uri/ /index.php$args;
+        }
+
+        location ~ \.php$ {
+                include snippets/fastcgi-php.conf;
+
+                # With php-fpm (or other unix sockets):
+                fastcgi_pass unix:/var/run/php/php7.2-fpm.sock;
+        }
+}
+```
+
+```
+$ sudo nginx -t
+$ sudo ln -s /etc/nginx/sites-available/wpcli.com /etc/nginx/sites-enabled/wpcli.com
+
+$ cd /etc/nginx/sites-enabled/
+$ ls
+default wpcli.com
+
+$ sudo systemctl restart nginx
+```
+
+and the view your browser, http&#58;//www\.wpcli.com
 
 ### ✍️ Author <a name = "author"></a>
 <div align="left">
