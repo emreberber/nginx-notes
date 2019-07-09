@@ -510,8 +510,8 @@ exit MariaDB
 
 ##### Implementation Steps
 
-> db : wpdb
-> user : wpemre
+> db : wpdb <br>
+> user : wpemre <br>
 > pass : wppass
 
 ```
