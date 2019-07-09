@@ -27,6 +27,7 @@
 - [Editing nginx.conf](#nginx-conf)
 - [Create Your Site(s) Directory Structure](#create_your_sites_directory_structure)
 - [Nginx Server Blocks](#nginx_server_blocks)
+- [MariaDB](#mariadb)
 - [Author](#author)
 - [Useful Links](#useful_links)
 
@@ -464,6 +465,100 @@ $ sudo systemctl restart nginx
 ```
 
 and the view your browser, http&#58;//www\.wpcli.com
+
+### MariaDB <a name = "mariadb"></a>
+
+- login into MariaDB
+- create the database
+- create a database user
+- give that user privilege on the database
+- flush privileges - refresh database
+
+##### Commands
+
+```
+login into database
+$ sudo mysql -u root
+
+show all databases
+> show databases;
+
+create a database
+> create database db_name;
+
+create a user
+> create user db_username;
+
+granting privileges
+> grant all privileges on db_name.* to 'db_user'@'localhost' identified by 'password';
+
+flush privileges
+> flush privileges;
+
+show user's privileges
+> show grants for 'db_username'@'localhost';
+
+delete a database
+> drop database db_name;
+
+delete a database user
+> drop user db_user;
+
+exit MariaDB
+> exit
+```
+
+##### Implementation Steps
+
+> db : wpdb
+> user : wpemre
+> pass : wppass
+
+```
+$ sudo mysql -u root
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+
+MariaDB [(none)]> create database  wpdb;
+Query OK, 1 row affected (0.01 sec)
+
+MariaDB [(none)]> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| wpdb               |
++--------------------+
+4 rows in set (0.00 sec)
+
+MariaDB [(none)]> create user wpemre;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> grant all privileges on wpdb .* to 'wpemre'@'localhost' identified by 'wppass';
+
+MariaDB [(none)]> flush privileges;
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> show grants for 'wpemre'@'localhost';
++---------------------------------------------------------------------------------------------------------------+
+| Grants for wpemre@localhost                                                                                   |
++---------------------------------------------------------------------------------------------------------------+
+| GRANT USAGE ON *.* TO 'wpemre'@'localhost' IDENTIFIED BY PASSWORD '*C9B2DB1CA193280B971CA3602D5174A5D637D2BF' |
+| GRANT ALL PRIVILEGES ON `wpdb`.* TO 'wpemre'@'localhost'                                                      |
++---------------------------------------------------------------------------------------------------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [(none)]> exit
+Bye
+```
 
 ### ✍️ Author <a name = "author"></a>
 <div align="left">
