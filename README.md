@@ -29,6 +29,7 @@
 - [Nginx Server Blocks](#nginx_server_blocks)
 - [MariaDB](#mariadb)
 - [Installing WPCLI on Your Server](#installing_wpcli_on_your_server)
+- [Wordpress Installing a Wordpress Site Using WP-CLI](#wp_installing_wp_site_using_wpcli)
 - [Author](#author)
 - [Useful Links](#useful_links)
 
@@ -599,6 +600,55 @@ WP-CLI packages dir:
 WP-CLI global config:
 WP-CLI project config:
 WP-CLI version: 2.2.0
+```
+
+### Wordpress Installing a Wordpress Site Using WP-CLI <a name = "wp_installing_wp_site_using_wpcli"></a>
+
+##### Commands
+
+```
+download wordpress
+$ wp core download
+
+create he wp-config.php file
+$ wp core config --dbname= --dbuser= --dbpass= --dbprefix=
+
+!!! Do Not Use wp_ as the Wordpress Database Prefix !!!
+
+installing wordpress
+$ wp core install --url= --title= --admin_user= --admin_password= --admin_email=
+```
+
+##### Implementation Steps
+
+```
+$ cd /var/www
+$ ls
+blog.wpcli.com  forum.wpcli.com  html  wpcli.com  www.wpcli.com
+$ cd wpcli.com/public_html
+$ wp core download
+Downloading WordPress 5.2.2 (en_US)...
+md5 hash verified: aea5bb5e4fd51034f67c85e6d8bc6bbf
+Success: WordPress downloaded.
+
+$ wp core config --dbname=wpdb --dbuser=wpemre --dbpass=wppass --dbprefix=wpprefix
+Success: Generated 'wp-config.php' file.
+
+$ wp core install --url=http://www.wpcli.com --title='WP cli' --admin_user=admin_emre --admin_password=admin_pass --admin_email=admin@wpcli.com
+(i change wpcli.com to http://35.236.64.179)
+sh: 1: /usr/sbin/sendmail: not found
+Success: WordPress installed successfully
+
+$ sudo apt update && sudo apt install sendmail
+
+$ cd /etc/nginx/sites-available
+$ sudo vi wpcli.com
+server_name 35.236.64.179;
+$ sudo nginx -t
+$ sudo systemctl restart nginx
+
+and then view browser 35.236.64.179
+for admin panel -> 35.236.64.179/wp-admin
 ```
 
 ### ✍️ Author <a name = "author"></a>
