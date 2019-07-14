@@ -629,7 +629,7 @@ Downloading WordPress 5.2.2 (en_US)...
 md5 hash verified: aea5bb5e4fd51034f67c85e6d8bc6bbf
 Success: WordPress downloaded.
 
-$ wp core config --dbname=wpdb --dbuser=wpemre --dbpass=wppass --dbprefix=wpprefix
+$ wp core config --dbname=wpdb --dbuser=wpemre --dbpass=wppass --locale=tr_TR
 Success: Generated 'wp-config.php' file.
 
 $ wp core install --url=http://www.wpcli.com --title='WP cli' --admin_user=admin_emre --admin_password=admin_pass --admin_email=admin@wpcli.com
