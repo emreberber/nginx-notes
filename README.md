@@ -54,7 +54,7 @@ $ lscpu
 
 
 # determine number of worker connections
-$ unlimit -n
+$ ulimit -n
 
 
 # test nginx configuration file syntax before reload
@@ -120,7 +120,7 @@ CPU(s):              1
 ...
 
 
-$ unlimit -n
+$ ulimit -n
 1024
 
 
