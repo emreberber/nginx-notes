@@ -293,9 +293,7 @@ $ sudo apt install tree
 $ tree
 .
 ├── blog.wpcli.com
-│   ├── public_html
-│   └── www.blog.wpcli.com
-│       └── public_html
+│   └── public_html
 ├── forum.wpcli.com
 │   └── public_html
 ├── html
